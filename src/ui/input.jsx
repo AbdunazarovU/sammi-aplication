@@ -1,9 +1,9 @@
 const Input = ({type = "text", label, state, setState}) => {
   return (
-    <div class="form-floating">
+    <div className="form-floating">
       <input
         type={type}
-        class="form-control"
+        className="form-control"
         id="floatingInput"
         placeholder={label}
         value={state}
