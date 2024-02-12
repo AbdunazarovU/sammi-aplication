@@ -11,8 +11,6 @@ const ValidationError = () => {
     });
   }, [error]);
 
-  console.log(error !== null && errorMessege());
-
   return (
     error !== null &&
     errorMessege().map(error => (
