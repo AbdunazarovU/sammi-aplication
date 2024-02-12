@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import { Input } from "../ui";
 import { signUserFailure, signUserStart, signUserSuccess } from "../slice/auth";
 import AuthService from "../service/auth";
@@ -7,12 +8,13 @@ import { ValidationError } from "./"
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
 
-  const { isLoading } = useSelector(state => state.auth)
+  const { isLoading, loggedIn } = useSelector(state => state.auth)
 
   const registerHandler = async (e) => {
     e.preventDefault()
@@ -24,13 +26,18 @@ const Register = () => {
     }
     try {
       const response = await AuthService.userRegister(user)
-      console.log(response)
-
       dispatch(signUserSuccess(response.user))
+      navigate("/")
     } catch (error) {
       dispatch(signUserFailure(error.response.data.errors))
     }
   }
+
+  useEffect(() => {
+    if(loggedIn) {
+      navigate("/")
+    }
+  }, []);
 
   return (
     <div className="text-center w-25 mx-auto mt-5">
