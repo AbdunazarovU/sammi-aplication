@@ -5,6 +5,8 @@ import { useEffect } from "react"
 import AuthService from "./service/auth"
 import { signUserSuccess } from "./slice/auth"
 import { getItem } from "./helpers/persistance-storage"
+import ArticleService from "./service/article"
+import { getArticlesStart, getArticlesSuccess } from "./slice/article"
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,11 +22,22 @@ const App = () => {
     }
   }
 
+  const getArticles = async() => {
+    dispatch(getArticlesStart())
+    try {
+      const response = await ArticleService.getArticles()
+      dispatch(getArticlesSuccess(response.articles))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     const token = getItem("token")
     if (token) {
       getUser()
     }
+    getArticles()
   }, [loggedIn]);
 
   return (
