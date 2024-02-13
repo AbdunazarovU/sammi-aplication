@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { Login, Main, Navbar, Register } from "./components"
+import { ArticleDetail, Login, Main, Navbar, Register } from "./components"
 import { useEffect } from "react"
 import AuthService from "./service/auth"
 import { signUserSuccess } from "./slice/auth"
@@ -13,7 +13,7 @@ const App = () => {
 
   const { loggedIn } = useSelector(state => state.auth)
 
-  const getUser = async() => {
+  const getUser = async () => {
     try {
       const response = await AuthService.getUser()
       dispatch(signUserSuccess(response.user))
@@ -22,7 +22,7 @@ const App = () => {
     }
   }
 
-  const getArticles = async() => {
+  const getArticles = async () => {
     dispatch(getArticlesStart())
     try {
       const response = await ArticleService.getArticles()
@@ -42,12 +42,15 @@ const App = () => {
 
   return (
     <div>
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<Main/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
-      </Routes>
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/article/:slug" element={<ArticleDetail />} />
+        </Routes>
+      </div>
     </div>
   )
 }
