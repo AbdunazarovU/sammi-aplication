@@ -22,8 +22,6 @@ const App = () => {
     }
   }
 
-
-
   useEffect(() => {
     const token = getItem("token")
     if (token) {

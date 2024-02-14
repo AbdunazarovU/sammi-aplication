@@ -18,7 +18,6 @@ const Main = () => {
       console.log(error);
     }
   };
-
   const deleteArticle = async slug => {
     try {
       await ArticleService.deleteArticle(slug)
