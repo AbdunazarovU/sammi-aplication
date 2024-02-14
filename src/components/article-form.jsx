@@ -1,0 +1,24 @@
+import { useSelector } from "react-redux"
+import { Input, TextArea } from "../ui"
+
+const ArticleForm = (props) => {
+  const { isLoading } = useSelector(state => state.article);
+  const {title, description, body, setBody, setTitle, setDescription, formSubmit} = props
+
+  return (
+    <form onSubmit={formSubmit}>
+      <Input label={"Title"} state={title} setState={setTitle} />
+      <TextArea
+        label={"Description"}
+        state={description}
+        setState={setDescription}
+      />
+      <TextArea label={"Body"} state={body} setState={setBody} height="300px" />
+      <button className="btn btn-primary w-100 py-2 mt-2" disabled={isLoading} type="submit">
+        {isLoading ? "Loading..." : "Create"}
+      </button>
+    </form>
+  );
+};
+
+export default ArticleForm;
